@@ -34,7 +34,7 @@ jobs:
         uses: docker/build-push-action@v2
         with:
           push: true
-          tags: astha0710/deptest/deptest1:${{ github.sha }}
+          tags: registry.hub.docker.com/astha0710/deptest:${{ github.sha }}
           file: ./Dockerfile
           context: ./
 
