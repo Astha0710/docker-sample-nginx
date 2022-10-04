@@ -1,0 +1,42 @@
+name: Trigger auto deployment for deptest
+
+# When this action will be executed
+on:
+  # Automatically trigger it when detected changes in repo
+  push:
+    branches: 
+      [ master ]
+    paths:
+    - '**'
+    - '.github/workflows/deptest-AutoDeployTrigger-a1cdae44-7078-4fd9-bd49-dffce6c6fc35.yml'
+
+  # Allow mannually trigger 
+  workflow_dispatch:      
+
+jobs:
+
+
+  deploy:
+    runs-on: ubuntu-latest
+    
+    steps:
+          
+      - name: Azure Login
+        uses: azure/login@v1
+        with:
+          creds: ${{ secrets.DEPTEST_AZURE_CREDENTIALS }}
+          
+      - name: Log in to container registry
+        uses: docker/login-action@v1
+        with:
+          registry: registry.hub.docker.com
+          username: ${{ secrets.DOCKERHUB_USERNAME }}
+          password: ${{ secrets.DOCKERHUB_PASSWORD }}          
+
+      - name: Deploy to containerapp
+        uses: azure/CLI@v1
+        with:
+          inlineScript: |
+            az config set extension.use_dynamic_install=yes_without_prompt
+            az containerapp registry set -n deptest -g rg --server registry.hub.docker.com --username  ${{ secrets.DOCKERHUB_USERNAME }} --password ${{ secrets.DOCKERHUB_PASSWORD }} --debug
+            az containerapp update -n deptest -g rg --image registry.hub.docker.com/astha0710/asthatestrepo:mywarsshtest --debug
