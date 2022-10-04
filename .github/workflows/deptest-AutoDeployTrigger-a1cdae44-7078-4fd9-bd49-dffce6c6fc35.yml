@@ -37,5 +37,5 @@ jobs:
         with:
           inlineScript: |
             az config set extension.use_dynamic_install=yes_without_prompt
-            az containerapp registry set -n deptest -g rg --server registry.hub.docker.com --username  ${{ secrets.DOCKERHUB_USERNAME }} --password ${{ secrets.DOCKERHUB_PASSWORD }}
+            az containerapp registry set -n deptest -g rg --server registry.hub.docker.com --username  ${{ secrets.DOCKERHUB_USERNAME }} --password ${{ secrets.DOCKERHUB_PASSWORD }} --debug
             az containerapp update -n deptest -g rg --image docker.io/astha0710/asthatestrepo:mywarsshtest --debug
