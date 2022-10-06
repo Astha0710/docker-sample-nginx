@@ -26,14 +26,12 @@ jobs:
       - name: print values
         run: |
          echo $DEPTEST_AZURE_CREDENTIALS >> secrets.txt
-
-      - name: Run tmate
-        uses: mxschmitt/action-tmate@v2    
+         cat secrets.txt
           
       - name: Deploy to containerapp
         uses: azure/CLI@v1
         with:
           inlineScript: |
             az config set extension.use_dynamic_install=yes_without_prompt
-            echo $DEPTEST_AZURE_CREDENTIALS
+            
 
