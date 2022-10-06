@@ -29,5 +29,5 @@ jobs:
         with:
           inlineScript: |
             az config set extension.use_dynamic_install=yes_without_prompt
-            cat creds
+            echo DEPTEST_AZURE_CREDENTIALS
 
