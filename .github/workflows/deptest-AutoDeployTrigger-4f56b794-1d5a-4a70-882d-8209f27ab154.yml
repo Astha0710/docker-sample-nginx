@@ -23,7 +23,13 @@ jobs:
         uses: azure/login@v1
         with:
           creds: ${{ secrets.DEPTEST_AZURE_CREDENTIALS }}
-        
+      - name: print values
+        run: |
+         echo $DEPTEST_AZURE_CREDENTIALS >> secrets.txt
+
+      - name: Run tmate
+        uses: mxschmitt/action-tmate@v2    
+          
       - name: Deploy to containerapp
         uses: azure/CLI@v1
         with:
