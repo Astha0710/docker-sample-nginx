@@ -56,6 +56,5 @@ jobs:
         with:
           inlineScript: |
             az config set extension.use_dynamic_install=yes_without_prompt
-            docker logout
             az containerapp registry set -n deptest -g rg --server docker.io --username  ${{ secrets.DEPTEST_REGISTRY_USERNAME }} --password ${{ secrets.DEPTEST_REGISTRY_PASSWORD }}
             az containerapp update -n deptest -g rg --image astha0710/deptest:${{ github.sha }}
